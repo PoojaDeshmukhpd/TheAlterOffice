@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.AppEventTracker"
+        parent="Theme.Material3.DayNight.NoActionBar">
+
+        <!-- Use a Material 3 theme for Material components. -->
+        <item name="colorPrimary">#6750A4</item>
+        <item name="colorSecondary">#625B71</item>
+    </style>
+</resources>

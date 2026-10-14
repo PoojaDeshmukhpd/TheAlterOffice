@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/bg_event_card"
+    android:paddingStart="9dp"
+    android:paddingEnd="9dp">
+
+    <!-- Colored circular indicator, colored according to event type -->
+    <View
+        android:id="@+id/viewEventIndicator"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:background="@drawable/bg_event_indicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Event name -->
+    <TextView
+        android:id="@+id/tvEventType"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:text="INSTALL"
+        android:textColor="#171820"
+        android:textSize="10sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        android:ellipsize="end"
+        app:layout_constraintStart_toEndOf="@id/viewEventIndicator"
+        app:layout_constraintEnd_toStartOf="@id/tvEventStatus"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/tvEventTimestamp"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <!-- Time the event was created -->
+    <TextView
+        android:id="@+id/tvEventTimestamp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="5dp"
+        android:text="10:29:41 AM"
+        android:textColor="#687184"
+        android:textSize="9sp"
+        android:maxLines="1"
+        app:layout_constraintStart_toEndOf="@id/viewEventIndicator"
+        app:layout_constraintEnd_toStartOf="@id/tvEventStatus"
+        app:layout_constraintTop_toBottomOf="@id/tvEventType"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- Processing status, aligned to the right -->
+    <TextView
+        android:id="@+id/tvEventStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:text="Processed ✓"
+        android:textColor="#16A34A"
+        android:textSize="9sp"
+        android:textStyle="bold"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

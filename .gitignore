@@ -1,0 +1,26 @@
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSe ttings.xml
+/build
+/captures
+.externalNativeBuild
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
+.kotlin/
+*.log
+captures/
+.externalNativeBuild/
+.cxx/
+.DS_Store
+Thumbs.db
+
+.env
+.env.*
+!.env.example
+secrets.properties

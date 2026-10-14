@@ -1,0 +1,472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:padding="12dp">
+
+    <!-- Summary card: Total processed events -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardTotalEvents"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:background="@drawable/bg_event_card"
+        android:padding="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cardTotalVisits"
+        android:layout_marginEnd="6dp">
+
+        <TextView
+            android:id="@+id/tvTotalEventsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Total Events Processed"
+            android:textColor="#64748B"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTotalEvents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#111827"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvTotalEventsLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Summary card: Unique visits -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cardTotalVisits"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="6dp"
+        android:background="@drawable/bg_event_card"
+        android:padding="12dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cardTotalEvents"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvTotalVisitsLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Total Visits (Unique Session)"
+            android:textColor="#64748B"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvTotalVisits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0"
+            android:textColor="#111827"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/tvTotalVisitsLabel"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Four event count cards -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/eventCountGrid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/cardTotalEvents"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardInstall"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_event_card"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cardVisit">
+
+            <TextView
+                android:id="@+id/tvInstallLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="INSTALL"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvInstallCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#111827"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvInstallLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardVisit"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/bg_event_card"
+            android:padding="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cardInstall"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tvVisitLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="VISIT"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvVisitCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#111827"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvVisitLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardAddToCart"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="6dp"
+            android:background="@drawable/bg_event_card"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/cardInstall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/cardPurchase">
+
+            <TextView
+                android:id="@+id/tvAddToCartLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ADD_TO_CART"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvAddToCartCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#111827"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvAddToCartLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cardPurchase"
+            android:layout_width="0dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_event_card"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/cardVisit"
+            app:layout_constraintStart_toEndOf="@id/cardAddToCart"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/tvPurchaseLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="PURCHASE"
+                android:textColor="#64748B"
+                android:textSize="11sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPurchaseCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#111827"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvPurchaseLabel"
+                app:layout_constraintStart_toStartOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Event breakdown heading -->
+    <TextView
+        android:id="@+id/tvBreakdownTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Event Breakdown"
+        android:textColor="#111827"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/eventCountGrid"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Breakdown table header -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/breakdownHeader"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp"
+        android:background="#F1F5F9"
+        android:paddingHorizontal="10dp"
+        app:layout_constraintTop_toBottomOf="@id/tvBreakdownTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Event Type"
+            android:textColor="#475569"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvHeaderCount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="2" />
+
+        <TextView
+            android:id="@+id/tvHeaderCount"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Count"
+            android:textColor="#475569"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="center"
+            app:layout_constraintStart_toEndOf="@id/tvHeaderCount"
+            app:layout_constraintEnd_toStartOf="@id/tvHeaderPercentage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1" />
+
+        <TextView
+            android:id="@+id/tvHeaderPercentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Percentage"
+            android:textColor="#475569"
+            android:textStyle="bold"
+            android:textSize="12sp"
+            android:gravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvHeaderCount"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_weight="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- Event breakdown rows -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/breakdownRows"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/breakdownHeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/tvInstallBreakdown"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="INSTALL"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvInstallBreakdownCount" />
+
+        <TextView
+            android:id="@+id/tvInstallBreakdownCount"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvInstallBreakdown"
+            app:layout_constraintEnd_toStartOf="@id/tvInstallBreakdownPercentage" />
+
+        <TextView
+            android:id="@+id/tvInstallBreakdownPercentage"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical|end"
+            android:paddingHorizontal="10dp"
+            android:text="0%"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvInstallBreakdownCount"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvVisitBreakdown"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="VISIT"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvInstallBreakdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvVisitBreakdownCount" />
+
+        <TextView
+            android:id="@+id/tvVisitBreakdownCount"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvInstallBreakdownCount"
+            app:layout_constraintStart_toEndOf="@id/tvVisitBreakdown"
+            app:layout_constraintEnd_toStartOf="@id/tvVisitBreakdownPercentage" />
+
+        <TextView
+            android:id="@+id/tvVisitBreakdownPercentage"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical|end"
+            android:paddingHorizontal="10dp"
+            android:text="0%"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvInstallBreakdownPercentage"
+            app:layout_constraintStart_toEndOf="@id/tvVisitBreakdownCount"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvAddToCartBreakdown"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="ADD_TO_CART"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvVisitBreakdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvAddToCartBreakdownCount" />
+
+        <TextView
+            android:id="@+id/tvAddToCartBreakdownCount"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvVisitBreakdownCount"
+            app:layout_constraintStart_toEndOf="@id/tvAddToCartBreakdown"
+            app:layout_constraintEnd_toStartOf="@id/tvAddToCartBreakdownPercentage" />
+
+        <TextView
+            android:id="@+id/tvAddToCartBreakdownPercentage"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical|end"
+            android:paddingHorizontal="10dp"
+            android:text="0%"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvVisitBreakdownPercentage"
+            app:layout_constraintStart_toEndOf="@id/tvAddToCartBreakdownCount"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPurchaseBreakdown"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="10dp"
+            android:text="PURCHASE"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvAddToCartBreakdown"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tvPurchaseBreakdownCount" />
+
+        <TextView
+            android:id="@+id/tvPurchaseBreakdownCount"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center"
+            android:text="0"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvAddToCartBreakdownCount"
+            app:layout_constraintStart_toEndOf="@id/tvPurchaseBreakdown"
+            app:layout_constraintEnd_toStartOf="@id/tvPurchaseBreakdownPercentage" />
+
+        <TextView
+            android:id="@+id/tvPurchaseBreakdownPercentage"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:gravity="center_vertical|end"
+            android:paddingHorizontal="10dp"
+            android:text="0%"
+            android:textColor="#334155"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/tvAddToCartBreakdownPercentage"
+            app:layout_constraintStart_toEndOf="@id/tvPurchaseBreakdownCount"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
