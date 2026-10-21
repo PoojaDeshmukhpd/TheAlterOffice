@@ -25,7 +25,8 @@ enum class QueueFilter {
 @HiltViewModel
 class QueueViewModel @Inject constructor(
     private val eventDao: EventDao,
-    private val enqueueCoordinator: EventEnqueueCoordinator
+    private val enqueueCoordinator: EventEnqueueCoordinator,
+    private val eventWorkScheduler: EventWorkScheduler
 ) : ViewModel() {
 
     private val _selectedFilter = MutableStateFlow(QueueFilter.IN_PROGRESS)
@@ -84,6 +85,27 @@ class QueueViewModel @Inject constructor(
                 _message.value = exception.message ?: "Unable to submit events."
             } finally {
                 _isSubmitting.value = false
+            }
+        }
+    }
+
+    fun retryEvent(eventId: Long) {
+        viewModelScope.launch {
+            try {
+                val updatedRows = eventDao.retryEvent(
+                    eventId = eventId,
+                    now = System.currentTimeMillis()
+                )
+
+                if (updatedRows > 0) {
+                    eventWorkScheduler.scheduleProcessing()
+                    _message.value = "Retry scheduled successfully."
+                } else {
+                    _message.value = "This event is no longer eligible for retry."
+                }
+            } catch (exception: Exception) {
+                _message.value =
+                    exception.message ?: "Unable to retry event."
             }
         }
     }

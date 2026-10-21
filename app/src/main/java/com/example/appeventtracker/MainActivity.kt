@@ -14,10 +14,14 @@ import kotlinx.coroutines.launch
 import java.util.UUID
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+
+    @Inject
+    lateinit var sessionManager: SessionManager
 
     @Inject
     lateinit var enqueueCoordinator: EventEnqueueCoordinator
@@ -52,10 +56,11 @@ class MainActivity : AppCompatActivity() {
 
             val installId = prefs.getString("install_id", null)
                 ?: UUID.randomUUID().toString().also {
-                    prefs.edit().putString("install_id", it).apply()
+                    prefs.edit()
+                        .putString("install_id", it)
+                        .commit()
                 }
 
-            // The repository should also enforce INSTALL deduplication.
             if (prefs.getBoolean("install_event_submitted", false)) {
                 Log.d("InstallTracker", "INSTALL already submitted: $installId")
                 return@launch
@@ -71,13 +76,22 @@ class MainActivity : AppCompatActivity() {
         """.trimIndent()
 
             try {
-                enqueueCoordinator.enqueueJson(installJson)
+                val results = enqueueCoordinator.enqueueJson(installJson)
 
-                prefs.edit()
-                    .putBoolean("install_event_submitted", true)
-                    .apply()
+                // Mark as submitted only if the event was inserted
+                // or was already present because of deduplication.
+                val accepted = results.any {
+                    it is com.example.appeventtracker.data.local.EnqueueResult.Enqueued ||
+                            it is com.example.appeventtracker.data.local.EnqueueResult.Duplicate
+                }
 
-                Log.d("InstallTracker", "INSTALL enqueued: $installId")
+                if (accepted) {
+                    prefs.edit()
+                        .putBoolean("install_event_submitted", true)
+                        .commit()
+
+                    Log.d("InstallTracker", "INSTALL already recorded: $installId")
+                }
             } catch (exception: Exception) {
                 Log.e("InstallTracker", "Failed to enqueue INSTALL", exception)
             }
@@ -155,6 +169,48 @@ class MainActivity : AppCompatActivity() {
                     StatisticsFragment(),
                     StatisticsFragment.TAG
                 )
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val isNewSession = sessionManager.startOrResumeSession()
+
+        if (isNewSession) {
+            enqueueVisitEvent()
+        }
+    }
+
+    override fun onStop() {
+        sessionManager.markAppBackgrounded()
+        super.onStop()
+    }
+
+    private fun enqueueVisitEvent() {
+        lifecycleScope.launch {
+            try {
+                val sessionId = sessionManager.getCurrentSessionId()
+
+                val visitJson = """
+                {
+                    "eventType": "VISIT",
+                    "payload": {
+                        "source": "app_session_start",
+                        "sessionId": "$sessionId"
+                    }
+                }
+            """.trimIndent()
+
+                enqueueCoordinator.enqueueJson(visitJson)
+
+                Log.d(
+                    "VisitTracker",
+                    "VISIT enqueued for session: $sessionId"
+                )
+            } catch (exception: Exception) {
+                Log.e("VisitTracker", "Unable to enqueue VISIT", exception)
             }
         }
     }

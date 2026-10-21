@@ -41,7 +41,10 @@ class QueueFragment : Fragment(R.layout.fragment_queue) {
     }
 
     private fun setupRecyclerView() {
-        eventAdapter = EventAdapter()
+        eventAdapter = EventAdapter { event ->
+            viewModel.retryEvent(event.id)
+        }
+
         binding.rvEvents.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = eventAdapter

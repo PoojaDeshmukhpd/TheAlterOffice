@@ -138,4 +138,19 @@ interface EventDao {
         GROUP BY eventType
     """)
     fun observeProcessedCountsByType(): Flow<List<EventTypeCount>>
+
+    @Query("""
+    UPDATE events
+    SET status = 'PENDING',
+        retryCount = 0,
+        nextAttemptAt = NULL,
+        lastError = NULL,
+        updatedAt = :now
+    WHERE id = :eventId
+      AND status IN ('FAILED', 'RETRYING')
+""")
+    suspend fun retryEvent(
+        eventId: Long,
+        now: Long
+    ): Int
 }

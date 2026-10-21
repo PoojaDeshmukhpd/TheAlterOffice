@@ -6,12 +6,6 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Owns the current session ID.
- *
- * The ID is persisted so that process death or app reopening does not
- * automatically create a new session.
- */
 @Singleton
 class SessionManager @Inject constructor(
     @ApplicationContext context: Context
@@ -21,31 +15,62 @@ class SessionManager @Inject constructor(
         Context.MODE_PRIVATE
     )
 
-    /**
-     * Returns the existing session ID or creates one if missing.
-     */
+    @Synchronized
+    fun startOrResumeSession(): Boolean {
+        val now = System.currentTimeMillis()
+        val sessionId = preferences.getString(KEY_SESSION_ID, null)
+        val lastBackgroundAt = preferences.getLong(
+            KEY_LAST_BACKGROUND_AT,
+            0L
+        )
+
+        val isNewSession = sessionId == null ||
+                lastBackgroundAt == 0L ||
+                now - lastBackgroundAt >= SESSION_TIMEOUT_MS
+
+        if (isNewSession) {
+            preferences.edit()
+                .putString(KEY_SESSION_ID, UUID.randomUUID().toString())
+                .remove(KEY_LAST_BACKGROUND_AT)
+                .apply()
+        } else {
+            preferences.edit()
+                .remove(KEY_LAST_BACKGROUND_AT)
+                .apply()
+        }
+
+        return isNewSession
+    }
+
     fun getCurrentSessionId(): String {
         return preferences.getString(KEY_SESSION_ID, null)
             ?: createNewSession()
     }
 
-    /**
-     * Starts a new logical session.
-     *
-     * This can be called by an explicit "New Session" action.
-     */
     @Synchronized
     fun createNewSession(): String {
         val sessionId = UUID.randomUUID().toString()
 
         preferences.edit()
             .putString(KEY_SESSION_ID, sessionId)
+            .remove(KEY_LAST_BACKGROUND_AT)
             .apply()
 
         return sessionId
     }
 
+    fun markAppBackgrounded() {
+        preferences.edit()
+            .putLong(
+                KEY_LAST_BACKGROUND_AT,
+                System.currentTimeMillis()
+            )
+            .apply()
+    }
+
     private companion object {
         const val KEY_SESSION_ID = "current_session_id"
+        const val KEY_LAST_BACKGROUND_AT = "last_background_at"
+        const val SESSION_TIMEOUT_MS = 2 * 60 * 1000L
     }
 }
